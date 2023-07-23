@@ -1,4 +1,6 @@
 class DestinationsController < ApplicationController
+rescue_from ActiveRecord::RecordNotFound, with: :destination_not_found
+rescue_from ActiveRecord::RecordInvalid, with: :invalid_destination
 
     def index
         render json: Destinations.all, status: :ok
