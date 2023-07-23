@@ -31,7 +31,7 @@ class ReviewsController < ApplicationController
     private
 
     def review_params
-        params.permit(:body)
+        params.permit(:body, :rating)
     end
 
     def review_not_found

@@ -1,6 +1,6 @@
 class DestinationsController < ApplicationController
-rescue_from ActiveRecord::RecordNotFound, with: :destination_not_found
-rescue_from ActiveRecord::RecordInvalid, with: :invalid_destination
+    rescue_from ActiveRecord::RecordNotFound, with: :destination_not_found
+    rescue_from ActiveRecord::RecordInvalid, with: :invalid_destination
 
     def index
         render json: Destinations.all, status: :ok
@@ -19,7 +19,7 @@ rescue_from ActiveRecord::RecordInvalid, with: :invalid_destination
     private
 
     def destination_params
-        params.permit(:city, :country, :image)
+        params.permit(:city, :country, :image, :rating)
     end
 
     def destination_not_found
