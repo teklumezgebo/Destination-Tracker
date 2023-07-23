@@ -26,5 +26,18 @@ class ReviewsController < ApplicationController
         head :no_content
     end
 
+    private
+
+    def review_params
+        params.permit(:body)
+    end
+
+    def review_not_found
+        render json: { error: "Review not found" }, status: :not_found
+    end
+
+    def invalid_review(invalid)
+        render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
+    end
 
 end
