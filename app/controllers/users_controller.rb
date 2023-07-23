@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+    rescue_from ActiveRecord::RecordNotFound, with: :user_not_found
+    rescue_from ActiveRecord::RecordInvalid, with: :invalid_user
 
     def index
         render json: User.all, status: :ok
@@ -27,6 +29,5 @@ class UsersController < ApplicationController
     def invalid_user(invalid)
         render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
     end
-
 
 end
