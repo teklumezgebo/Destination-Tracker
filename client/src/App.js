@@ -10,13 +10,13 @@ function App() {
   return (
     <div>
       <NavBar />
-      <Route path="/home">
+      <Route exact path="/profile">
         <Profile />
       </Route>
-      <Route path="/destinations">
+      <Route exact path="/destinations">
         <Destinations />
       </Route>
-      <Route path="/reviews">
+      <Route exact path="/reviews">
         <Reviews />
       </Route>
     </div>
