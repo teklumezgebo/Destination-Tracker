@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom/cjs/react-router-dom.min';
 import NavBar from './NavBar';
 import Profile from './Profile';
 import Destinations from './Destinations';
+import Reviews from './Reviews';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
@@ -15,8 +16,8 @@ function App() {
       <Route path="/destinations">
         <Destinations />
       </Route>
-      <Route>
-        
+      <Route path="/reviews">
+        <Reviews />
       </Route>
     </div>
   )
