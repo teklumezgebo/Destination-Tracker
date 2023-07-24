@@ -16,5 +16,8 @@
     "postcss": "^8.4.27",
     "postcss-cli": "^10.1.0",
     "react-router-dom": "^5.3.4"
+  },
+  "devDependencies": {
+    "@types/react-router-dom": "^5.3.3"
   }
 }

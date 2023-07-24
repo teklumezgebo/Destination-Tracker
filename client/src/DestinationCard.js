@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-function Destination() {
+function DestinationCard() {
     return(
         <div className="card" style={{ width: "18rem" }}>
         <img className="card-img-top img-fluid" src="https://placebear.com/g/200/200" alt="Destination"></img>
@@ -13,4 +13,4 @@ function Destination() {
     )
 }
 
-export default Destination
+export default DestinationCard

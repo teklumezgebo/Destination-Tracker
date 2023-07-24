@@ -1,4 +1,4 @@
-function Profile() {
+function Destinations() {
     return(
         <div>
             
@@ -6,4 +6,4 @@ function Profile() {
     )
 }
 
-export default Profile
+export default Destinations
