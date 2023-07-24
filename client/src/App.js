@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+// import { useState, useEffect } from 'react'
 import Destination from './Destination';
-import bootstrap from 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
   return (
