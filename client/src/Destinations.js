@@ -17,7 +17,7 @@ function Destinations() {
                     <button type="submit" className="btn btn-dark btn-lg mx-auto">Add Destination</button>
                 </div>
             </form>
-            {/* {list of destination go here} */}
+            {/* {list of destination cards} */}
         </div>
     )
 }
