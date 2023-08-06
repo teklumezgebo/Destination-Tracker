@@ -7,9 +7,24 @@ import Reviews from './Reviews';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
+  
+  function login() {
+    fetch('')
+    .then(res => {
+      if (res.ok) {
+        // set state
+      } else {
+        // invalid username/password
+      }
+    } 
+    )
+  }
+  
   return (
     <div>
       <NavBar />
+      <button>Login</button>
+      <button>Sign Up</button>
       <Route exact path="/profile">
         <Profile />
       </Route>
