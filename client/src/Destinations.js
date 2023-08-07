@@ -1,3 +1,4 @@
+import React from "react"
 import { useEffect, useState } from "react"
 import DestinationCard from "./DestinationCard"
 
@@ -14,12 +15,6 @@ function Destinations() {
         .then(destinations => setDestinations(destinations))
     }, [])
 
-    const destination = {
-        city: city,
-        country: country,
-        image: image
-    }
-
     function onCityChange(event) {
         setCity(event.target.value)
     }
@@ -32,6 +27,12 @@ function Destinations() {
         setImage(event.target.value)
     }
 
+    function clearInputFields() {
+        setCity('')
+        setCountry('')
+        setImage('')
+    }
+
     function onDestinationSubmit(event) {
         event.preventDefault()
         fetch('/destinations', {
@@ -39,11 +40,18 @@ function Destinations() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(destination)
+            body: JSON.stringify({
+                city: city,
+                country: country,
+                image: image
+            })
         })
         .then(res => {
             if (res.ok) {
-                res.json().then(newDestination => setDestinations([...destinations, newDestination]))
+                res.json().then(newDestination => {
+                    setDestinations([...destinations, newDestination])
+                    clearInputFields()
+                })
             } else {
                 console.log(res)
             }
@@ -68,7 +76,9 @@ function Destinations() {
                     <button type="submit" className="btn btn-dark btn-lg mx-auto">Add Destination</button>
                 </div>
             </form>
-            {/* {destinations.map(destination => { return <DestinationCard city={destination.city} country={destination.country} image={destination.image} rating={destination.rating}/> })} */}
+            <div>
+            {destinations.length === 0 ? null : destinations.map(destination => ( <DestinationCard key={destination.id} city={destination.city} country={destination.country} image={destination.image} rating={destination.rating}/> ))}
+            </div>
         </div>
     )
 }

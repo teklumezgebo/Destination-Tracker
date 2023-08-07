@@ -3,7 +3,7 @@ class DestinationsController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :invalid_destination
 
     def index
-        render json: Destinations.all, status: :ok
+        render json: Destination.all, status: :ok
     end
 
     def show
@@ -19,7 +19,7 @@ class DestinationsController < ApplicationController
     private
 
     def destination_params
-        params.permit(:city, :country, :image, :rating)
+        params.permit(:city, :country, :image)
     end
 
     def destination_not_found

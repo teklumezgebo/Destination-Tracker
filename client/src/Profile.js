@@ -16,7 +16,7 @@ function Profile({ user }) {
         <div>
             <h3 className="text-left pt-5">{user.username}</h3>
             {setUserTitle()}
-            <h1 className="pt-5 pr-1">Places you've been</h1>
+            <h1 className="pt-5 pr-1">Places you've reviewed:</h1>
             <div>
                 {user.destinations}
             </div>
