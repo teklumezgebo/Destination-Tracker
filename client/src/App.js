@@ -5,11 +5,12 @@ import Login from './Login';
 import NavBar from './NavBar';
 import Profile from './Profile';
 import Destinations from './Destinations';
-import Reviews from './Reviews';
+import ReviewPage from './ReviewPage';
 
 function App() {
 
   const [user, setUser] = useState(null)
+  const [chosenDestination, setChosenDestination] = useState('')
 
   useEffect(() => {
     fetch('/auth')
@@ -23,7 +24,11 @@ function App() {
   }, [])
 
   function currentUser(user) {
-    setUser(() => user)
+    setUser(user)
+  }
+
+  function onChosenDestinationChange(destination) {
+    setChosenDestination(destination)
   }
 
   if (!user) return <Login onUserChange={currentUser}/> 
@@ -34,11 +39,11 @@ function App() {
       <Route path="/profile">
         <Profile user={user}/>
       </Route>
-      <Route path="/destinations">
-        <Destinations />
+      <Route path="/destinations" >
+        <Destinations onChosenDestinationChange={onChosenDestinationChange}/>
       </Route>
-      <Route path="/reviews" user={user}>
-        <Reviews />
+      <Route path="/reviewpage" >
+        <ReviewPage chosenDestination={chosenDestination} user={user}/>
       </Route>
     </div>
   )

@@ -51,7 +51,6 @@ function Login({ onUserChange }) {
             if (res.ok) {
                 res.json()
                 .then(createdUser => {
-                    console.log(createdUser)
                     onUserChange(createdUser)
                 })
             } else {
