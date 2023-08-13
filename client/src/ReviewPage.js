@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import Review from "./Review";
 
 function ReviewPage({ chosenDestination, user }) {
 
     const [body, setBody] = useState('')
     const [rating, setRating] = useState('')
+
+    useEffect(() => {
+        fetch(`/destinations/${chosenDestination.id}`)
+        .then(res => res.json())
+        .then(destination => console.log(destination))
+    }, [chosenDestination])
 
     function onRatingChange(event) {
         setRating(event.target.value)
@@ -30,8 +36,9 @@ function ReviewPage({ chosenDestination, user }) {
         .then(res => res.json())
         .then(newReview => {
             console.log(newReview)
-            // setBody('')
-            // setRating('')
+
+            setBody('')
+            setRating('')
         })
     }
 

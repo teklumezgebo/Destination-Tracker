@@ -8,7 +8,7 @@ class DestinationsController < ApplicationController
 
     def show
         destination = Destination.find(params[:id])
-        redner json: destination, status: :ok
+        render json: destination, status: :ok
     end
 
     def create

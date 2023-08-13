@@ -6,6 +6,7 @@ import NavBar from './NavBar';
 import Profile from './Profile';
 import Destinations from './Destinations';
 import ReviewPage from './ReviewPage';
+import UserReviews from './UserReviews';
 
 function App() {
 
@@ -44,6 +45,9 @@ function App() {
       </Route>
       <Route path="/reviewpage" >
         <ReviewPage chosenDestination={chosenDestination} user={user}/>
+      </Route>
+      <Route path="/reviews" >
+        <UserReviews user={user}/>
       </Route>
     </div>
   )
