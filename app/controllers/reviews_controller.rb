@@ -12,8 +12,13 @@ class ReviewsController < ApplicationController
     end
 
     def create
-        review = Review.create!(review_params)
-        render json: review, status: :created
+        existing_review = Review.find_by(user_id: params[:user_id], destination_id: params[:destination_id])
+        if existing_review
+            render json: { error: "Destination Already Reviewed" }, status: :unauthorized
+        else
+            review = Review.create!(review_params)
+            render json: review, status: :created
+        end
     end
 
     def update

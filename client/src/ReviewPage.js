@@ -33,12 +33,15 @@ function ReviewPage({ chosenDestination, user }) {
                 user_id: user.id
             })
         })
-        .then(res => res.json())
-        .then(newReview => {
-            console.log(newReview)
-
-            setBody('')
-            setRating('')
+        .then(res => {
+            if (res.ok) {
+                res.json().then(review => {
+                    setBody('')
+                    setRating('')
+                })
+            } else {
+                res.json().then(res => console.log(res))
+            }
         })
     }
 
