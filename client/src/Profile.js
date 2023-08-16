@@ -1,7 +1,5 @@
 function Profile({ user }) {
 
-    console.log(user)
-    
     function setUserTitle() {
         if (user.destinations.length === 0) {
             return <p>New Traveler</p>
@@ -19,9 +17,8 @@ function Profile({ user }) {
             <h3 className="text-left pt-5">{user.username}</h3>
             {setUserTitle()}
             <h1 className="pt-5 pr-1">Places you have been:</h1>
-            <div>
-                
-            </div>
+            <br></br>
+            {user.destinations.length >= 1 ? user.destinations.map(destination => <h3>- {destination.city}, {destination.country}</h3>) : <h3>Nowhere yet :/</h3>}
         </div>
     )
 }

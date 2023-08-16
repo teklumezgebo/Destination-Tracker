@@ -32,22 +32,25 @@ function App() {
     setChosenDestination(destination)
   }
 
-  if (!user) return <Login onUserChange={currentUser}/> 
-  
+  console.log(user)
+
   return (
     <div>
       <NavBar onUserChange={currentUser}/>
+      <Route path="/login">
+        <Login onUserChange={currentUser}/>
+      </Route>
       <Route path="/profile">
-        <Profile user={user}/>
+        {user ? <Profile user={user}/> : <Login onUserChange={currentUser}/>}
       </Route>
-      <Route path="/destinations" >
-        <Destinations onChosenDestinationChange={onChosenDestinationChange}/>
+      <Route path="/destinations">
+        {user ? <Destinations onChosenDestinationChange={onChosenDestinationChange}/> : <Login onUserChange={currentUser}/>}
       </Route>
-      <Route path="/reviewpage" >
-        <ReviewPage chosenDestination={chosenDestination} user={user}/>
+      <Route path="/reviewpage">
+        {user ? <ReviewPage chosenDestination={chosenDestination} user={user}/> : <Login onUserChange={currentUser}/>}
       </Route>
-      <Route path="/reviews" >
-        <UserReviews user={user}/>
+      <Route path="/reviews">
+        {user ? <UserReviews user={user}/> : <Login onUserChange={currentUser}/>}
       </Route>
     </div>
   )

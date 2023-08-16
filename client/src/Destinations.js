@@ -8,6 +8,7 @@ function Destinations({ onChosenDestinationChange }) {
     const [city, setCity] = useState('')
     const [country, setCountry] = useState('')
     const [image, setImage] = useState('')
+    const [form, setForm] = useState(false)
     
     useEffect(() => {
         fetch('/destinations')
@@ -25,6 +26,10 @@ function Destinations({ onChosenDestinationChange }) {
 
     function onImageChange(event) {
         setImage(event.target.value)
+    }
+
+    function addDestination() {
+        setForm(!form)
     }
 
     function clearInputFields() {
@@ -51,6 +56,7 @@ function Destinations({ onChosenDestinationChange }) {
                 res.json().then(newDestination => {
                     setDestinations([...destinations, newDestination])
                     clearInputFields()
+                    setForm(false)
                 })
             } else {
                 console.log(res)
@@ -60,22 +66,23 @@ function Destinations({ onChosenDestinationChange }) {
 
     return(
         <div>
-            <form onSubmit={onDestinationSubmit}>
-                <div className="form-row">
-                    <div className="form-group col-md-6 mx-auto">
-                    <input type="text" className="form-control" id="inputCity" value={city} onChange={onCityChange} placeholder="City"></input>
-                    </div>
-                    <div className="form-group col-md-6 mx-auto">
-                    <input type="text" className="form-control" id="inputCountry" value={country} onChange={onCountryChange} placeholder="Country"></input>
-                    </div>
-                </div>
-                <div className="form-group col-md-6 mx-auto">
-                    <input type="text" className="form-control" id="inputURL" value={image} onChange={onImageChange} placeholder="Image URL"></input>
-                </div>
-                <div className="text-center" >
-                    <button type="submit" className="btn btn-dark btn-lg mx-auto">Add Destination</button>
-                </div>
-            </form>
+            <button className="btn btn-success" onClick={addDestination}>Add Destination</button>
+            {form ? <form onSubmit={onDestinationSubmit}>
+                        <div className="form-row">
+                            <div className="form-group col-md-6 mx-auto">
+                            <input type="text" className="form-control" id="inputCity" value={city} onChange={onCityChange} placeholder="City"></input>
+                            </div>
+                            <div className="form-group col-md-6 mx-auto">
+                            <input type="text" className="form-control" id="inputCountry" value={country} onChange={onCountryChange} placeholder="Country"></input>
+                            </div>
+                        </div>
+                        <div className="form-group col-md-6 mx-auto">
+                            <input type="text" className="form-control" id="inputURL" value={image} onChange={onImageChange} placeholder="Image URL"></input>
+                        </div>
+                        <div className="text-center" >
+                            <button type="submit" className="btn btn-dark btn-lg mx-auto">Add Destination</button>
+                        </div>
+                    </form> : null }
             <br></br>
             <div className=" d-flex justify-content-center">
                 <div className="card-group">
