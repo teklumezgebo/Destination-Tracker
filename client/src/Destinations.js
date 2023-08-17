@@ -1,8 +1,7 @@
-import React from "react"
 import { useEffect, useState } from "react"
 import DestinationCard from "./DestinationCard"
 
-function Destinations({ onChosenDestinationChange }) {
+function Destinations() {
 
     const [destinations, setDestinations] = useState('')
     const [city, setCity] = useState('')
@@ -59,14 +58,16 @@ function Destinations({ onChosenDestinationChange }) {
                     setForm(false)
                 })
             } else {
-                console.log(res)
+                res.json().then(res => console.log(res))
             }
         })
     }
 
     return(
-        <div>
+        <div>        
+            <br></br>            
             <button className="btn btn-success" onClick={addDestination}>Add Destination</button>
+            <br></br>
             {form ? <form onSubmit={onDestinationSubmit}>
                         <div className="form-row">
                             <div className="form-group col-md-6 mx-auto">
@@ -86,7 +87,7 @@ function Destinations({ onChosenDestinationChange }) {
             <br></br>
             <div className=" d-flex justify-content-center">
                 <div className="card-group">
-                    {destinations.length === 0 ? null : destinations.map(destination => ( <div className="col-md-3 mb-4 pb-2"><DestinationCard key={destination.id} city={destination.city} country={destination.country} image={destination.image} rating={destination.rating} destination={destination} onChosenDestinationChange={onChosenDestinationChange}/></div> ))}
+                    {destinations.length === 0 ? null : destinations.map(destination => ( <div className="col-md-3 mb-4 pb-2"><DestinationCard key={destination.id} id={destination.id} city={destination.city} country={destination.country} image={destination.image} rating={destination.rating}/></div> ))}
                 </div>
             </div> 
         </div>

@@ -1,5 +1,3 @@
-import React from "react";
-
 function Review({ review }) {
     return(
         <div class="card" style="width: 18rem;">

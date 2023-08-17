@@ -1,4 +1,3 @@
-import React from "react";
 import UserReviewCards from "./UserReviewCards";
 
 function UserReviews({ user }) { 

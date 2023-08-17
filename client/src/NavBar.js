@@ -15,7 +15,7 @@ function NavBar({ onUserChange }) {
                 <div className="collapse navbar-collapse">
                     <div className="navbar-nav">
                         <a className="nav-item nav-link" href="/profile">Profile</a>
-                        <a className="nav-item nav-link" href="/destinations">Destinations</a>
+                        <a className="nav-item nav-link" href="/">Destinations</a>
                         <a className="nav-item nav-link" href="/reviews">Reviews</a>
                     </div>
                 </div>
