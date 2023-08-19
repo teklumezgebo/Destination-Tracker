@@ -5,7 +5,9 @@ import Review from  './Review';
 function ReviewPage({ user }) {
 
     const [body, setBody] = useState('')
-    const [rating, setRating] = useState('')
+    const [rating, setRating] = useState(null)
+    const [updateButton, setUpdateButton] = useState(false)
+    const [error, setError] = useState(false)
     const [destination, setDestination] = useState()
 
     // const { id } = useParams()
@@ -15,6 +17,7 @@ function ReviewPage({ user }) {
         .then(res => res.json())
         .then(destination => {
             setDestination(destination)
+            setError(false)
         })
     }, [])
 
@@ -26,13 +29,45 @@ function ReviewPage({ user }) {
         setBody(event.target.value)
     }
 
+    function placeReview(body, rating) {
+        setBody(body)
+        setRating(rating)
+        setUpdateButton(true)
+    }
+
+    console.log()
+
+    function editReview() {
+        const chosenReview = destination.reviews.filter(review => review.user === user.username)
+        console.log(chosenReview)
+        fetch(`/reviews/${chosenReview.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: chosenReview.id,
+                body: body,
+                rating: rating
+            })
+        })
+        .then(res => {
+            if (res.ok) {
+                res.json().then(editedReview => console.log(editedReview))
+            } else {
+                res.json().then(res => console.log(res))
+            }
+        })
+    }
+
     function deleteReview(id) {
         fetch(`/reviews/${id}`, {
             method: 'DELETE'
         })
         .then(() => {
             const filteredList = destination.reviews.filter(review => review.id !== id)
-            setDestination(filteredList)
+            destination.reviews = filteredList
+            setError(false)
         })
     }
     
@@ -52,17 +87,23 @@ function ReviewPage({ user }) {
         .then(res => {
             if (res.ok) {
                 res.json().then(review => {
-                    console.log(review)
+                    const reviewObj = {
+                        id: review.id,
+                        body: review.body,
+                        rating: review.rating,
+                        user: user.username
+                    }
+                    const addedReviews = [...destination.reviews, reviewObj]
+                    destination.reviews = addedReviews
                     setBody('')
-                    setRating('')
+                    setRating(null)
+                    setError(false)
                 })
             } else {
-                res.json().then(res => console.log(res))
+                res.json().then(() => setError(true))
             }
         })
     }
-
-    console.log(destination)
 
     return (
         <div>
@@ -89,8 +130,10 @@ function ReviewPage({ user }) {
                                             <button className="dropdown-item" type="button" onClick={onRatingChange}>4</button>
                                             <button className="dropdown-item" type="button" onClick={onRatingChange}>5</button>
                                         </div>
-                                        <button className="btn btn-success" onClick={submitReview}>Post</button>
+                                        {updateButton ? <button className="btn btn-success" onClick={editReview}>Update</button> : <button className="btn btn-success" onClick={submitReview}>Post</button>}
                                     </div>
+                                    <br></br>
+                                    {error ? <p className="text-center text-danger font-weight-bold">Destination already reviewed!</p> : null}
                                 </div>
                             </div>
                         </div>
@@ -98,7 +141,7 @@ function ReviewPage({ user }) {
                 </div>
             </div>
             <br></br>
-            {destination ? destination.reviews.length === 0 ? <h3>Be the first to review!</h3> : destination.reviews.map(review => <Review key={review.id} id={review.id} body={review.body} rating={review.rating} username={review.user} deleteReview={deleteReview} user={user}/> ) : <p>Loading destination data...</p>}
+            {destination ? (destination.reviews.length >= 1 ? destination.reviews.map(review => <Review key={review.id} id={review.id} body={review.body} rating={review.rating} username={review.user} deleteReview={deleteReview} placeReview={placeReview} user={user}/> ) : <h3>Be the first to review!</h3>) : <p>Loading destination data...</p>}
         </div>
     )
 }
