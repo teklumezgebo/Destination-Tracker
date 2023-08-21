@@ -1,6 +1,7 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { useUserContext } from "./UserContext";
 
-function Login({ onUserChange }) {
+function Login() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [signupUsername, setSignupUsername] = useState('')
@@ -8,6 +9,8 @@ function Login({ onUserChange }) {
     const [signUpForm, setSignUpForm] = useState(false)
     const [loginError, setLoginError] = useState(false)
     const [signUpError, setSignUpError] = useState(false)
+
+    const { setUser } = useUserContext()
 
     const loginCredentials = {
         username: username,
@@ -53,7 +56,7 @@ function Login({ onUserChange }) {
             if (res.ok) {
                 res.json()
                 .then(createdUser => {
-                    onUserChange(createdUser)
+                    setUser(createdUser)
                     setSignUpForm(false)
                 })
             } else {
@@ -77,7 +80,7 @@ function Login({ onUserChange }) {
         .then(res => {
             if (res.ok) {
                 res.json().then(loggedInUser => {
-                onUserChange(loggedInUser)
+                setUser(loggedInUser)
                 setUsername('')
                 setPassword('')
             })

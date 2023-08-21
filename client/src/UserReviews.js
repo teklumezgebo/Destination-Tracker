@@ -1,6 +1,10 @@
 import UserReviewCards from "./UserReviewCards";
+import { useUserContext } from "./UserContext";
 
-function UserReviews({ user }) { 
+function UserReviews() { 
+    
+    const { user } = useUserContext()
+    
     return (
         <div>
             <div>

@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from "react";
+import { useUserContext } from "./UserContext";
 import Review from  './Review';
 
-function ReviewPage({ user, chosenDestination }) {
+function ReviewPage({ chosenDestination }) {
 
     const [destination, setDestination] = useState('')
     const [body, setBody] = useState('')
     const [rating, setRating] = useState(null)
     const [updateButton, setUpdateButton] = useState(false)
     const [error, setError] = useState(false)
+    const { user } = useUserContext()
     
     useEffect(() => {
         fetch(`/destinations/${chosenDestination}`)
-        .then(res => res.json())
-        .then(destination => {
-            setDestination(destination)
-            console.log(destination)
-            setError(false)
+        .then(res => {
+            if (res.ok) {
+                res.json()
+                .then(destination => {
+                setDestination(destination)
+                setError(false)
+                })
+            } else {
+                res.json().then(res => console.log(res))
+            }
         })
     }, [chosenDestination])
 
@@ -107,7 +114,7 @@ function ReviewPage({ user, chosenDestination }) {
                     setError(false)
                 })
             } else {
-                res.json().then(() => setError(true))
+                res.json().then(res => setError(res))
             }
         })
     }
@@ -140,7 +147,7 @@ function ReviewPage({ user, chosenDestination }) {
                                         {updateButton ? <button className="btn btn-success" onClick={editReview}>Update</button> : <button className="btn btn-success" onClick={submitReview}>Post</button>}
                                     </div>
                                     <br></br>
-                                    {error ? <p className="text-center text-danger font-weight-bold">Destination already reviewed!</p> : null}
+                                    {error ? <p className="text-center text-danger font-weight-bold">{error.errors ? error.errors.map(message => message) : error.error}</p> : null}
                                 </div>
                             </div>
                         </div>

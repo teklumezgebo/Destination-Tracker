@@ -1,4 +1,9 @@
-function Profile({ user }) {
+import React from "react"
+import { useUserContext } from "./UserContext"
+
+function Profile() {
+
+    const { user } = useUserContext()
 
     function setUserTitle() {
         if (user.destinations.length === 0) {

@@ -12,8 +12,7 @@ import { useUserContext } from './UserContext';
 function App() {
 
   const { user, setUser } = useUserContext()
-  const [chosenDestination, setChosenDestination] = useState(null)
-  
+  const [chosenDestination, setChosenDestination] = useState(localStorage.getItem('chosenDestination') || null)
   
   useEffect(() => {
     fetch('/auth')
@@ -21,36 +20,33 @@ function App() {
       if(res.ok){
         res.json().then(user => setUser(user))
       } else {
-        res.json().then(res => console.log(res))
+        res.json().then(() => <Login />)
       }
     })
   }, [setUser])
 
-  function currentUser(user) {
-    setUser(user)
-  }
-
   function currentDestination(destination) {
     setChosenDestination(destination)
+    localStorage.setItem('chosenDestination', destination)
   }
 
-  if (user === null) return (<Login onUserChange={currentUser}/>)
+  if (user === null) return (<Login />)
 
   return (
     <div>
-      <NavBar onUserChange={currentUser}/>
+      <NavBar />
       <Switch>
         <Route exact path="/profile">
-          <Profile user={user}/>
+          <Profile />
         </Route>
         <Route exact path="/">
           <Destinations onDestinationChange={currentDestination}/>
         </Route>
         <Route path="/reviewpage">
-          <ReviewPage user={user} chosenDestination={chosenDestination}/>
+          <ReviewPage chosenDestination={chosenDestination}/>
         </Route>
         <Route exact path="/reviews">
-          <UserReviews user={user}/> 
+          <UserReviews /> 
         </Route>
       </Switch>
     </div>
