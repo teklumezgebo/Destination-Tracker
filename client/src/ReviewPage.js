@@ -3,7 +3,7 @@ import Review from  './Review';
 
 function ReviewPage({ user, chosenDestination }) {
 
-    const [destination, setDestination] = useState()
+    const [destination, setDestination] = useState('')
     const [body, setBody] = useState('')
     const [rating, setRating] = useState(null)
     const [updateButton, setUpdateButton] = useState(false)
@@ -14,6 +14,7 @@ function ReviewPage({ user, chosenDestination }) {
         .then(res => res.json())
         .then(destination => {
             setDestination(destination)
+            console.log(destination)
             setError(false)
         })
     }, [chosenDestination])

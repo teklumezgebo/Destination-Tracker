@@ -20,8 +20,6 @@ function Destinations({ onDestinationChange }) {
         })
     }, [])
 
-    console.log(destinations)
-
     function onCityChange(event) {
         setCity(event.target.value)
     }
@@ -95,7 +93,7 @@ function Destinations({ onDestinationChange }) {
                             <button type="submit" className="btn btn-dark btn-lg mx-auto">Add Destination</button>
                         </div>
                         <br></br>
-                        {error ? erorrMessage.errors.map(message => <p className="text-danger text-center">{message}</p>) : null}
+                        {error ? erorrMessage.errors.map(message => <p key={message} className="text-danger text-center">{message}</p>) : null}
                     </form> : null }
             <br></br>
             <div className=" d-flex justify-content-center">

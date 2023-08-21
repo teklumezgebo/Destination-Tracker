@@ -15,11 +15,10 @@ function Profile({ user }) {
     return(
         <div className="container d-flex align-items-center justify-content-center vh-100" >
             <div className="card text-white bg-dark mb-3">
-                <div className="card-header">{user.username}</div>
+                <div className="card-header">{user.username.toUpperCase()} {setUserTitle()}</div>
                 <div className="card-body">
-                    {setUserTitle()}
-                    <h3 className="pt-5 pr-1">Places you have been:</h3>
-                    {user.destinations.length >= 1 ? user.destinations.map(destination => <h4>- {destination.city}, {destination.country}</h4>) : <h4>Nowhere yet :/</h4>}
+                    <h3>Places you have been:</h3>
+                    {user.destinations.length >= 1 ? user.destinations.map(destination => <h5>- {destination.city}, {destination.country}</h5>) : <h4>Nowhere yet :/</h4>}
                 </div>
             </div>
             

@@ -6,6 +6,8 @@ function Login({ onUserChange }) {
     const [signupUsername, setSignupUsername] = useState('')
     const [signupPassword, setSignupPassword] = useState('')
     const [signUpForm, setSignUpForm] = useState(false)
+    const [loginError, setLoginError] = useState(false)
+    const [signUpError, setSignUpError] = useState(false)
 
     const loginCredentials = {
         username: username,
@@ -35,6 +37,7 @@ function Login({ onUserChange }) {
 
     function showSignUpForm() {
         setSignUpForm(!signUpForm)
+        setSignUpError(false)
     }
 
     function signup(event) {
@@ -54,7 +57,9 @@ function Login({ onUserChange }) {
                     setSignUpForm(false)
                 })
             } else {
-                res.json().then(res => console.log(res))
+                res.json().then(res => {
+                    setSignUpError(res)
+                })
             }
         })
 
@@ -69,11 +74,18 @@ function Login({ onUserChange }) {
             },
             body: JSON.stringify(loginCredentials)
         })
-        .then(res => res.json())
-        .then(loggedInUser => {
-            onUserChange(loggedInUser)
-            setUsername('')
-            setPassword('')
+        .then(res => {
+            if (res.ok) {
+                res.json().then(loggedInUser => {
+                onUserChange(loggedInUser)
+                setUsername('')
+                setPassword('')
+            })
+            } else {
+                res.json().then(res => {
+                    setLoginError(res)
+                })
+            }
         })
     }
 
@@ -93,6 +105,8 @@ function Login({ onUserChange }) {
                         </div>
                         <br></br>
                             <button type="submit" className="btn btn-success">Login</button>
+                            <br></br>
+                            {loginError ? <p key={loginError.error} className="text-danger text-center mt-3">{loginError.error}</p> : null}
                     </form>
                     <div>
                         <div>
@@ -105,6 +119,8 @@ function Login({ onUserChange }) {
                             <input type="password" id="createdPassword" className="form-control text-muted" value={signupPassword} onChange={onSignupPasswordChange}></input>
                             <br></br>
                             <button type="submit" className="btn btn-success">Create Account</button>
+                            <br></br>
+                            {signUpError ? signUpError.errors.map(message => <p key={message} className="text-danger text-center mt-3">{message}</p>) : null}
                         </form> : null}
                     </div>
                 </div>

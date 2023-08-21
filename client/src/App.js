@@ -7,11 +7,13 @@ import Profile from './Profile';
 import Destinations from './Destinations';
 import ReviewPage from './ReviewPage';
 import UserReviews from './UserReviews';
+import { useUserContext } from './UserContext';
 
 function App() {
 
-  const [user, setUser] = useState(null)
+  const { user, setUser } = useUserContext()
   const [chosenDestination, setChosenDestination] = useState(null)
+  
   
   useEffect(() => {
     fetch('/auth')
@@ -22,7 +24,7 @@ function App() {
         res.json().then(res => console.log(res))
       }
     })
-  }, [])
+  }, [setUser])
 
   function currentUser(user) {
     setUser(user)
