@@ -1,19 +1,16 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Review from  './Review';
-// import { useParams } from "react-router-dom";
 
 function ReviewPage({ user }) {
 
+    const [destination, setDestination] = useState()
     const [body, setBody] = useState('')
     const [rating, setRating] = useState(null)
     const [updateButton, setUpdateButton] = useState(false)
     const [error, setError] = useState(false)
-    const [destination, setDestination] = useState()
-
-    // const { id } = useParams()
-
+    
     useEffect(() => {
-        fetch("/destinations/1")
+        fetch('/destinations/1')
         .then(res => res.json())
         .then(destination => {
             setDestination(destination)
@@ -35,11 +32,8 @@ function ReviewPage({ user }) {
         setUpdateButton(true)
     }
 
-    console.log()
-
     function editReview() {
-        const chosenReview = destination.reviews.filter(review => review.user === user.username)
-        console.log(chosenReview)
+        const chosenReview = destination.reviews.find(review => review.user === user.username)
         fetch(`/reviews/${chosenReview.id}`, {
             method: 'PATCH',
             headers: {
@@ -53,7 +47,19 @@ function ReviewPage({ user }) {
         })
         .then(res => {
             if (res.ok) {
-                res.json().then(editedReview => console.log(editedReview))
+                res.json().then(editedReview => {
+                    editedReview.user = editedReview.user.username
+                    const updatedReviews = destination.reviews.map(review => {
+                        if (review.user === editedReview.user) {
+                            return editedReview
+                        }
+                        return review
+                    })
+                    destination.reviews = updatedReviews
+                    setBody('')
+                    setRating(null)
+                    setUpdateButton(false)
+                })
             } else {
                 res.json().then(res => console.log(res))
             }
@@ -67,7 +73,7 @@ function ReviewPage({ user }) {
         .then(() => {
             const filteredList = destination.reviews.filter(review => review.id !== id)
             destination.reviews = filteredList
-            setError(false)
+            setError(null)
         })
     }
     
