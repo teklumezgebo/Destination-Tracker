@@ -36,6 +36,7 @@ function Destinations({ onDestinationChange }) {
 
     function addDestination() {
         setForm(!form)
+        setError(false)
     }
 
     function clearInputFields() {

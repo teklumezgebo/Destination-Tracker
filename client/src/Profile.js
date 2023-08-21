@@ -5,9 +5,9 @@ function Profile({ user }) {
             return <h5>New Traveler</h5>
         } else if (user.destinations.length > 0 && user.destinations.length <= 5) {
             return <h5>Novice Traveler</h5>
-        } else if (user.destinations.length > 6 && user.destinations.length <= 15) {
+        } else if (user.destinations.length >= 6 && user.destinations.length <= 15) {
             return <h5>Experienced Traveler</h5>
-        } else if (user.destinations.length > 16) {
+        } else if (user.destinations.length >= 16) {
             return <h5>Expert Traveler</h5>
         }   
     }
