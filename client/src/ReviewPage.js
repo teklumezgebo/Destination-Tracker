@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Review from  './Review';
 
-function ReviewPage({ user }) {
+function ReviewPage({ user, chosenDestination }) {
 
     const [destination, setDestination] = useState()
     const [body, setBody] = useState('')
@@ -10,13 +10,13 @@ function ReviewPage({ user }) {
     const [error, setError] = useState(false)
     
     useEffect(() => {
-        fetch('/destinations/1')
+        fetch(`/destinations/${chosenDestination}`)
         .then(res => res.json())
         .then(destination => {
             setDestination(destination)
             setError(false)
         })
-    }, [])
+    }, [chosenDestination])
 
     function onRatingChange(event) {
         setRating(parseInt(event.target.textContent))
@@ -113,7 +113,7 @@ function ReviewPage({ user }) {
 
     return (
         <div>
-            {destination ? <h1 className="text-center">{destination.city}, {destination.country}    {destination.rating ? rating : 0}★</h1> : <p>Loading destination data...</p>}
+            {destination ? <h1 className="text-center">{destination.city}, {destination.country}</h1> : <p>Loading destination data...</p>}
             <br></br>
             <div>
                 <div className="container">

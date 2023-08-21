@@ -11,6 +11,7 @@ import UserReviews from './UserReviews';
 function App() {
 
   const [user, setUser] = useState(null)
+  const [chosenDestination, setChosenDestination] = useState(null)
   
   useEffect(() => {
     fetch('/auth')
@@ -27,6 +28,10 @@ function App() {
     setUser(user)
   }
 
+  function currentDestination(destination) {
+    setChosenDestination(destination)
+  }
+
   if (user === null) return (<Login onUserChange={currentUser}/>)
 
   return (
@@ -37,10 +42,10 @@ function App() {
           <Profile user={user}/>
         </Route>
         <Route exact path="/">
-          <Destinations/>
+          <Destinations onDestinationChange={currentDestination}/>
         </Route>
         <Route path="/reviewpage">
-          <ReviewPage user={user}/>
+          <ReviewPage user={user} chosenDestination={chosenDestination}/>
         </Route>
         <Route exact path="/reviews">
           <UserReviews user={user}/> 
