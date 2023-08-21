@@ -1,15 +1,18 @@
 import React from "react"
+import { Link } from "react-router-dom"
 import { useUserContext } from "./UserContext"
 
 function NavBar() {
     
     const { setUser } = useUserContext()
+
     function logout() {
         fetch('/logout', {
             method: 'DELETE'
         })
     .then(() => {
-      setUser(null)
+        localStorage.clear()
+        setUser(null)
     })
   }
     
@@ -23,7 +26,7 @@ function NavBar() {
                         <a className="nav-item nav-link" href="/reviews">Reviews</a>
                     </div>
                 </div>
-                <button type="button" className="btn btn-danger ml-auto" onClick={logout}>Logout</button>
+                <button type="button" className="btn btn-danger ml-auto" onClick={logout}><Link className='text-white' style={{ textDecoration: 'none' }} to="/">Logout</Link></button>
             </nav>
         </div>
     )

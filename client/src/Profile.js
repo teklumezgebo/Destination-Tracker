@@ -23,12 +23,9 @@ function Profile() {
                 <div className="card-header">{user.username.toUpperCase()} {setUserTitle()}</div>
                 <div className="card-body">
                     <h3>Places you have been:</h3>
-                    {user.destinations.length >= 1 ? user.destinations.map(destination => <h5>- {destination.city}, {destination.country}</h5>) : <h4>Nowhere yet :/</h4>}
+                    {user.destinations.length >= 1 ? user.destinations.map(destination => <h5 key={destination.id}>- {destination.city}, {destination.country}</h5>) : <h4>Nowhere yet :/</h4>}
                 </div>
             </div>
-            
-            <br></br>
-            
         </div>
     )
 }

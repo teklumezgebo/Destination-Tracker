@@ -18,6 +18,10 @@ function Destinations({ onDestinationChange }) {
             setDestinations(destinations)
             setError(false)
         })
+
+        return () => {
+            setDestinations('')
+        }
     }, [])
 
     function onCityChange(event) {
@@ -94,11 +98,11 @@ function Destinations({ onDestinationChange }) {
                         </div>
                         <br></br>
                         {error ? erorrMessage.errors.map(message => <p key={message} className="text-danger text-center">{message}</p>) : null}
-                    </form> : null }
+                    </form> : null}
             <br></br>
             <div className=" d-flex justify-content-center">
                 <div className="card-group">
-                    {destinations.length === 0 ? null : destinations.map(destination => ( <div className="col-md-3 mb-4 pb-2"><DestinationCard key={destination.id} id={destination.id} city={destination.city} country={destination.country} image={destination.image} onDestinationChange={onDestinationChange}/></div> ))}
+                    {destinations.length === 0 ? null : destinations.map(destination => ( <div className="col-md-3 mb-4 pb-2" key={destination.id}><DestinationCard key={destination.id} id={destination.id} city={destination.city} country={destination.country} image={destination.image} onDestinationChange={onDestinationChange}/></div> ))}
                 </div>
             </div> 
         </div>
