@@ -54,14 +54,13 @@ function Login() {
         })
         .then(res => {
             if (res.ok) {
-                res.json()
-                .then(createdUser => {
+                res.json().then(createdUser => {
                     setUser(createdUser)
                     setSignUpForm(false)
                 })
             } else {
                 res.json().then(res => {
-                    setSignUpError(res)
+                    console.log(res)
                 })
             }
         })

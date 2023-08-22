@@ -24,6 +24,11 @@ function ReviewPage({ chosenDestination }) {
                 res.json().then(res => console.log(res))
             }
         })
+
+        return () => {
+            setDestination('')
+        }
+        
     }, [chosenDestination])
 
     function onRatingChange(event) {

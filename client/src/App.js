@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Route, Switch } from 'react-router-dom';
 import Login from './Login';
 import NavBar from './NavBar';
@@ -23,6 +23,11 @@ function App() {
         res.json().then(() => <Login />)
       }
     })
+
+    return () => {
+      setUser(null)
+    }
+
   }, [setUser])
 
   function currentDestination(destination) {

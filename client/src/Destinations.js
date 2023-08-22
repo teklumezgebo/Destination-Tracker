@@ -22,6 +22,7 @@ function Destinations({ onDestinationChange }) {
         return () => {
             setDestinations('')
         }
+
     }, [])
 
     function onCityChange(event) {
@@ -79,7 +80,7 @@ function Destinations({ onDestinationChange }) {
     return(
         <div>        
             <br></br>            
-            <button className="btn btn-success" onClick={addDestination}>Add Destination</button>
+            <button className="btn btn-success" onClick={addDestination}>Add Destination {form ? <i className="fa-solid fa-minus"></i> : <i className="fa-solid fa-plus"></i>}</button>
             <br></br>
             {form ? <form onSubmit={onDestinationSubmit}>
                         <div className="form-row">
