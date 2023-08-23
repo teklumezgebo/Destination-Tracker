@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(version: 2023_07_23_215918) do
     t.string "city"
     t.string "country"
     t.string "image"
-    t.integer "rating"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
