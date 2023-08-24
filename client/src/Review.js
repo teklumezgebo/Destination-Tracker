@@ -1,3 +1,5 @@
+import React from "react"
+
 function Review({ id, user, username, rating, body, deleteReview, placeReview }) {
     return(
         <div className="card">

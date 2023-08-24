@@ -1,3 +1,5 @@
+import React from "react"
+
 function UserReviewCards({ city, country, body}) {
     return(
         <div className="card bg-dark text-white">

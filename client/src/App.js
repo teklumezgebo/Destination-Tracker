@@ -1,18 +1,18 @@
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react'
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Login from './Login';
 import NavBar from './NavBar';
+import HomePage from './HomePage';
+import DestinationPage from './DestinationPage';
 import Profile from './Profile';
-import Destinations from './Destinations';
-import ReviewPage from './ReviewPage';
 import UserReviews from './UserReviews';
 import { useUserContext } from './UserContext';
 
 function App() {
 
   const { user, setUser } = useUserContext()
-  const [chosenDestination, setChosenDestination] = useState(localStorage.getItem('chosenDestination') || null)
+  const [destinations, setDestinations] = useState('')
   
   useEffect(() => {
     fetch('/auth')
@@ -30,30 +30,34 @@ function App() {
 
   }, [setUser])
 
-  function currentDestination(destination) {
-    setChosenDestination(destination)
-    localStorage.setItem('chosenDestination', destination)
+  useEffect(() => {
+    fetch('/destinations')
+    .then(res => res.json())
+    .then(destinations => {
+        setDestinations(destinations)
+    })
+
+    return () => {
+        setDestinations('')
+    }
+
+}, [])
+
+  function onDestinationChange(destinations) {
+    setDestinations(destinations)
   }
 
-  if (user === null) return (<Login />)
+  if (user === null) return (<Login/>)
 
   return (
     <div>
       <NavBar />
-      <Switch>
-        <Route exact path="/profile">
-          <Profile />
-        </Route>
-        <Route exact path="/">
-          <Destinations onDestinationChange={currentDestination}/>
-        </Route>
-        <Route path="/reviewpage">
-          <ReviewPage chosenDestination={chosenDestination}/>
-        </Route>
-        <Route exact path="/reviews">
-          <UserReviews /> 
-        </Route>
-      </Switch>
+        <Routes>
+          <Route exact path="/profile" element={<Profile/>} />
+          <Route exact path="/" element={<HomePage destinations={destinations} onDestinationChange={onDestinationChange}/>} />
+          <Route path="/destinations/:id" element={<DestinationPage destinations={destinations}/>} />
+          <Route exact path="/reviews" element={<UserReviews/>} />
+        </Routes>
     </div>
   )
 }
