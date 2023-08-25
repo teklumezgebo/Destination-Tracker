@@ -1,14 +1,23 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import DestinationCard from "./DestinationCard"
 
-function HomePage({ destinations, onDestinationChange }) {
+function HomePage() {
 
+    const [destinations, setDestinations] = useState([])
     const [city, setCity] = useState('')
     const [country, setCountry] = useState('')
     const [image, setImage] = useState('')
     const [form, setForm] = useState(false)
     const [error, setError] = useState(false)
     const [erorrMessage, setErrorMessage]= useState('')
+
+    useEffect(() => {
+        fetch('/destinations')
+        .then(res => res.json())
+        .then(destinations => {
+            setDestinations(destinations)
+        })
+    }, [])
     
     function onCityChange(event) {
         setCity(event.target.value)
@@ -49,7 +58,7 @@ function HomePage({ destinations, onDestinationChange }) {
         .then(res => {
             if (res.ok) {
                 res.json().then(newDestination => {
-                    onDestinationChange([...destinations, newDestination])
+                    setDestinations([...destinations, newDestination])
                     clearInputFields()
                     setForm(false)
                 })
@@ -88,7 +97,7 @@ function HomePage({ destinations, onDestinationChange }) {
             <br></br>
             <div className=" d-flex justify-content-center">
                 <div className="card-group">
-                    {destinations.length === 0 ? null : destinations.map(destination => ( <div className="col-md-3 mb-4 pb-2" key={destination.id}><DestinationCard key={destination.id} id={destination.id} city={destination.city} country={destination.country} image={destination.image}/></div> ))}
+                    {destinations ? destinations.map(destination => ( <div className="col-md-3 mb-4 pb-2" key={destination.id}><DestinationCard key={destination.id} id={destination.id} city={destination.city} country={destination.country} image={destination.image}/></div> )) : <p>Loading...</p>}
                 </div>
             </div> 
         </div>

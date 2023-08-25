@@ -11,7 +11,6 @@ function NavBar() {
             method: 'DELETE'
         })
     .then(() => {
-        localStorage.clear()
         setUser(null)
     })
   }

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useUserContext } from "./UserContext";
 import Review from  './Review';
 
-function DestinationPage({ destinations }) {
+function DestinationPage() {
 
     const [destination, setDestination] = useState('')
     const [body, setBody] = useState('')
@@ -15,9 +15,20 @@ function DestinationPage({ destinations }) {
     const { id } = useParams()
 
     useEffect(() => {
-        const selectedDestination = destinations.find(destination => destination.id === parseInt(id))
-        setDestination(selectedDestination)
-    }, [id, destinations])
+        fetch(`/destinations/${id}`)
+        .then(res => {
+            if (res.ok) {
+                res.json().then(chosenDestination => setDestination(chosenDestination))
+            } else {
+                res.json().then(res => console.log(res))
+            }
+        })
+
+        return () => {
+            setDestination(null)
+        }
+        
+    }, [id])
 
     function onRatingChange(event) {
         setRating(parseInt(event.target.textContent))
@@ -115,7 +126,7 @@ function DestinationPage({ destinations }) {
 
     return (
         <div>
-            {destination ? <h1 className="text-center">{destination.city}, {destination.country}</h1> : <p>Loading destination data...</p>}
+            {destination ? <h1 className="text-center">{destination.city}, {destination.country}</h1> : <h2 className="text-center">Loading destination data...</h2>}
             <br></br>
             <div>
                 <div className="container">

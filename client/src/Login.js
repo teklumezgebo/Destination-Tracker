@@ -65,7 +65,6 @@ function Login() {
                 })
             }
         })
-
     }
 
     function login(event) {
@@ -81,8 +80,6 @@ function Login() {
             if (res.ok) {
                 res.json().then(loggedInUser => {
                 setUser(loggedInUser)
-                setUsername('')
-                setPassword('')
             })
             } else {
                 res.json().then(res => {
