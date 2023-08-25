@@ -1,6 +1,10 @@
 import React from "react"
+import { useUserContext } from "./UserContext"
 
-function Review({ id, user, username, rating, body, deleteReview, placeReview }) {
+function Review({ id, username, rating, body, deleteReview, placeReview }) {
+    
+    const { user } = useUserContext()
+
     return(
         <div className="card">
             <div className="card-body">

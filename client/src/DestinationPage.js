@@ -126,7 +126,7 @@ function DestinationPage() {
 
     return (
         <div>
-            {destination ? <h1 className="text-center">{destination.city}, {destination.country}</h1> : <h2 className="text-center">Loading destination data...</h2>}
+            {destination ? <div><div><h1 className="text-center">{destination.city}, {destination.country}</h1></div><div className="d-flex align-items-center justify-content-center"><br></br><img className=" d-flex align-items-center justify-content-center w-50 h-50" src={destination.image}></img></div></div> : <h2 className="text-center">Loading destination data...</h2>}
             <br></br>
             <div>
                 <div className="container">
@@ -160,7 +160,7 @@ function DestinationPage() {
                 </div>
             </div>
             <br></br>
-            {destination ? (destination.reviews.length >= 1 ? destination.reviews.map(review => <Review key={review.id} id={review.id} body={review.body} rating={review.rating} username={review.user} deleteReview={deleteReview} placeReview={placeReview} user={user}/> ) : <h3>Be the first to review!</h3>) : <p>Loading destination data...</p>}
+            {destination ? (destination.reviews.length >= 1 ? destination.reviews.map(review => <Review key={review.id} id={review.id} body={review.body} rating={review.rating} username={review.user} deleteReview={deleteReview} placeReview={placeReview}/> ) : <h3 className="text-center">Be the first to review!</h3>) : <p>Loading destination data...</p>}
         </div>
     )
 }
