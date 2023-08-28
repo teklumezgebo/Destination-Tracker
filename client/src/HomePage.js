@@ -36,12 +36,6 @@ function HomePage() {
         setError(false)
     }
 
-    function clearInputFields() {
-        setCity('')
-        setCountry('')
-        setImage('')
-    }
-
     function onDestinationSubmit(event) {
         event.preventDefault()
         fetch('/destinations', {
@@ -59,7 +53,9 @@ function HomePage() {
             if (res.ok) {
                 res.json().then(newDestination => {
                     setDestinations([...destinations, newDestination])
-                    clearInputFields()
+                    setCity('')
+                    setCountry('')
+                    setImage('')
                     setForm(false)
                 })
             } else {

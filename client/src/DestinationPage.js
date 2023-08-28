@@ -4,7 +4,7 @@ import { useUserContext } from "./UserContext";
 import Review from  './Review';
 
 function DestinationPage() {
-
+    
     const [destination, setDestination] = useState('')
     const [body, setBody] = useState('')
     const [rating, setRating] = useState(null)
@@ -30,6 +30,8 @@ function DestinationPage() {
         
     }, [id])
 
+    // if destination is found with the id -> display / in the meantime <p>load....<p>
+
     function onRatingChange(event) {
         setRating(parseInt(event.target.textContent))
     }
@@ -44,7 +46,8 @@ function DestinationPage() {
         setUpdateButton(true)
     }
 
-    function editReview() {
+    function editReview(event) {
+        event.preventDefault()
         const chosenReview = destination.reviews.find(review => review.user === user.username)
         fetch(`/reviews/${chosenReview.id}`, {
             method: 'PATCH',
@@ -52,7 +55,7 @@ function DestinationPage() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                id: destination.id,
+                destination_id: destination.id,
                 body: body,
                 rating: rating
             })
@@ -73,7 +76,10 @@ function DestinationPage() {
                     setUpdateButton(false)
                 })
             } else {
-                res.json().then(res => console.log(res))
+                res.json().then(res => {
+                    setUpdateButton(false)
+                    setError(res)
+                })
             }
         })
     }
@@ -99,8 +105,7 @@ function DestinationPage() {
             body: JSON.stringify({
                 body: body,
                 rating: rating,
-                destination_id: destination.id,
-                user_id: user.id
+                destination_id: destination.id
             })
         })
         .then(res => {
@@ -126,7 +131,7 @@ function DestinationPage() {
 
     return (
         <div>
-            {destination ? <div><div><h1 className="text-center">{destination.city}, {destination.country}</h1></div><div className="d-flex align-items-center justify-content-center"><br></br><img className=" d-flex align-items-center justify-content-center w-50 h-50" src={destination.image}></img></div></div> : <h2 className="text-center">Loading destination data...</h2>}
+            {destination ? <div><div><h1 className="text-center">{destination.city}, {destination.country}</h1></div><div className="d-flex align-items-center justify-content-center"><br></br><img className=" d-flex align-items-center justify-content-center w-50 h-50" alt={destination.city} src={destination.image}></img></div></div> : <h2 className="text-center">Loading destination data...</h2>}
             <br></br>
             <div>
                 <div className="container">

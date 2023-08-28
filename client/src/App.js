@@ -30,10 +30,10 @@ function App() {
     <div>
       <NavBar />
         <Routes>
-          <Route path="/profile" element={<Profile/>} />
+          <Route path="/profile" element={<Profile />} />
           <Route exact path="/" element={<HomePage />} />
           <Route path="/destinations/:id" element={<DestinationPage />} />
-          <Route path="/reviews" element={<UserReviews/>} />
+          <Route path="/reviews" element={<UserReviews />}/>
         </Routes>
     </div>
   )

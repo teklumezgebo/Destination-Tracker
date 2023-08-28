@@ -1,6 +1,6 @@
 class DestinationsController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :destination_not_found
-    rescue_from ActiveRecord::RecordInvalid, with: :invalid_destination
+    rescue_from ActiveRecord::RecordInvalid, with: :invalid_entity
 
     def index
         render json: Destination.all, status: :ok
@@ -25,9 +25,4 @@ class DestinationsController < ApplicationController
     def destination_not_found
         render json: { error: "Destination not found" }, status: :not_found
     end
-
-    def invalid_destination(invalid)
-        render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
-    end
-
 end

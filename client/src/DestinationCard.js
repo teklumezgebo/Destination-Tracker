@@ -1,9 +1,7 @@
 import React from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import { Link } from 'react-router-dom'
 
-function DestinationCard({ city, country, image, id }) {
-        
+function DestinationCard({ city, country, image, id }) {  
     return(
         <div className="card h-100 w-100 d-flex bg-dark mb-3 " style={{ width: "25rem" }}>
         <img className="card-img-bottom w-100 h-100" src={image} alt={`${city}, ${country}`}></img>
