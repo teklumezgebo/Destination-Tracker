@@ -1,23 +1,14 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import DestinationCard from "./DestinationCard"
 
-function HomePage() {
+function HomePage({ destinations, onDestinationChange }) {
 
-    const [destinations, setDestinations] = useState([])
     const [city, setCity] = useState('')
     const [country, setCountry] = useState('')
     const [image, setImage] = useState('')
     const [form, setForm] = useState(false)
     const [error, setError] = useState(false)
     const [erorrMessage, setErrorMessage]= useState('')
-
-    useEffect(() => {
-        fetch('/destinations')
-        .then(res => res.json())
-        .then(destinations => {
-            setDestinations(destinations)
-        })
-    }, [])
     
     function onCityChange(event) {
         setCity(event.target.value)
@@ -52,7 +43,7 @@ function HomePage() {
         .then(res => {
             if (res.ok) {
                 res.json().then(newDestination => {
-                    setDestinations([...destinations, newDestination])
+                    onDestinationChange([...destinations, newDestination])
                     setCity('')
                     setCountry('')
                     setImage('')

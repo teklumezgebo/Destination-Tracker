@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useUserContext } from "./UserContext";
 import Review from  './Review';
 
-function DestinationPage() {
+function DestinationPage({ destinations }) {
     
-    const [destination, setDestination] = useState('')
     const [body, setBody] = useState('')
     const [rating, setRating] = useState(null)
     const [updateButton, setUpdateButton] = useState(false)
@@ -14,23 +13,7 @@ function DestinationPage() {
 
     const { id } = useParams()
 
-    useEffect(() => {
-        fetch(`/destinations/${id}`)
-        .then(res => {
-            if (res.ok) {
-                res.json().then(chosenDestination => setDestination(chosenDestination))
-            } else {
-                res.json().then(res => console.log(res))
-            }
-        })
-
-        return () => {
-            setDestination(null)
-        }
-        
-    }, [id])
-
-    // if destination is found with the id -> display / in the meantime <p>load....<p>
+    const destination = destinations.find(destination => destination.id === parseInt(id))
 
     function onRatingChange(event) {
         setRating(parseInt(event.target.textContent))

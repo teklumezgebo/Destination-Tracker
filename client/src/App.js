@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom';
 import Login from './Login';
 import NavBar from './NavBar';
@@ -12,6 +12,7 @@ import { useUserContext } from './UserContext';
 function App() {
 
   const { user, setUser } = useUserContext()
+  const [destinations, setDestinations] = useState([])
   
   useEffect(() => {
     fetch('/auth')
@@ -24,6 +25,18 @@ function App() {
     })
   }, [setUser])
 
+  useEffect(() => {
+    fetch('/destinations')
+    .then(res => res.json())
+    .then(destinations => {
+        setDestinations(destinations)
+    })
+  }, [])
+
+  function onDestinationChange(destinations) {
+    setDestinations(destinations)
+  }
+
   if (user === null) return (<Login/>)
 
   return (
@@ -31,8 +44,8 @@ function App() {
       <NavBar />
         <Routes>
           <Route path="/profile" element={<Profile />} />
-          <Route exact path="/" element={<HomePage />} />
-          <Route path="/destinations/:id" element={<DestinationPage />} />
+          <Route exact path="/" element={<HomePage destinations={destinations} onDestinationChange={onDestinationChange} />} />
+          <Route path="/destinations/:id" element={<DestinationPage destinations={destinations} />} />
           <Route path="/reviews" element={<UserReviews />}/>
         </Routes>
     </div>
